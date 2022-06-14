@@ -1,0 +1,225 @@
+﻿@model IEnumerable<Registro_Direcciones_Clientes.Models.Cliente>
+
+@{
+    ViewData["Title"] = "Listado Clientes";
+}
+
+<h2>Listado de Clientes</h2>
+
+<p>
+    <button class='btn btn-success btn-sm' type='button' onclick='abrirModal()'>Nuevo Cliente</button>
+</p>
+
+<!-- Modal Registro Clientes-->
+<div class="modal fade" id="FormModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Registrar Cliente</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+              <form id="my-form">
+                <div class="row">
+                    <div class="col-sm-12">
+                    <input type="hidden" id="txtId" />
+                    <div class="form-group">
+                        <label for="txtNombre">Nombre:</label>
+                        <input type="text" class="form-control" id="txtNombre" autocomplete="off">
+                    </div>
+                    <div class="form-group">
+                        <label for="txtApellido">Apellido:</label>
+                        <input type="text" class="form-control" id="txtApellido" autocomplete="off">
+                    </div>
+                </div>
+            </div>
+             <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                <button id="submit" class="btn btn-primary" value="submit" >Guardar</button>
+            </div>
+
+            </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Registro Direcciones-->
+<div class="modal fade" id="FormModalRegDir" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Registrar Dirección</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+              <form id="my-formRegDir">
+                <div class="row">
+                    <div class="col-sm-12">
+                    <input type="hidden" id="txtIdDir" />
+                     <div class="form-group">
+                         <label for="cbxCliente">Cliente:</label>
+                         <select id="cbxCliente" class="form-select">
+                             <option value="">Seleccionar Cliente</option>
+                         </select>
+                    </div>
+                    <div class="form-group">
+                         <label for="cbxSector">Sector:</label>
+                         <select id="cbxSector" class="form-select">
+                             <option value="">Seleccionar Sector</option>
+                         </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="txtCalle">Calle:</label>
+                        <input type="text" class="form-control" id="txtCalle" autocomplete="off">
+                    </div>
+                    <div class="form-group">
+                        <label for="txtDireccion">Dirección:</label>
+                        <input type="text" class="form-control" id="txtDireccion" autocomplete="off">
+                    </div>
+                </div>
+            </div>
+             <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                <button id="submit" class="btn btn-primary" value="submit" >Guardar</button>
+            </div>
+
+            </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<table class="table table-bordered">
+    <thead class="thead-dark">
+        <tr>
+            <th>
+                ID
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Apellido)
+            </th>
+            <th class="col-3"></th>
+        </tr>
+    </thead>
+    <tbody class="table-striped">
+@foreach (var item in Model) {
+        <tr>
+            <td>
+               <div>@item.Idcliente.ToString("#####")</div> 
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Apellido)
+            </td>
+            <td class="col-3">
+                <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.Idcliente">Ver Dir.</a> |
+                <button class='btn btn-primary btn-sm' type='button' onclick='abrirModalAgrDir(@item.Idcliente)'>Agregar Dir.</button>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+<script>
+
+      // Validaciones 
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById("my-form").addEventListener('submit', validarFormulario); 
+        });
+
+        function validarFormulario(evento) {
+          evento.preventDefault();
+
+          if(document.getElementById('txtNombre').value.trim().length == 0) {
+            alert('Debe especificar el Nombre.');
+            document.getElementById('txtNombre').focus();
+            return;
+          }
+
+          
+          if(document.getElementById('txtApellido').value.trim().length == 0) {
+            alert('Debe especificar el Apellido.');
+            document.getElementById('txtApellido').focus();
+            return;
+          }
+
+          Guardar();
+          this.submit();
+          
+        }
+
+     function abrirModal() {
+         $("#txtNombre").val("");
+         $("#txtApellido").val("");
+         $('#FormModal').modal('show'); }
+
+     function abrirModalAgrDir($cliente) {
+         $("#cbxCliente").val($cliente);
+         $("#cbxSector").val("");
+         $("#txtCalle").val("");
+         $("#txtDireccion").val("");
+         $('#FormModalRegDir').modal('show'); }
+
+     function Guardar() {
+
+            var entidad = new Object();
+            entidad.CodigoTipoArticulo= parseFloat($("#txtId").val());
+            entidad.Nombre=  $("#txtNombre").val();
+            entidad.Apellido=  $("#txtApellido").val();
+           
+            $.ajax({
+                url: "@Url.Action("Guardar", "Clientes")",
+                type: "POST",
+                dataType: "json",
+                data: JSON.stringify(entidad),
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    if (data.resultado) {
+                        alert("Datos guardados exitosamente!!");
+                        //tabla_entidad.ajax.reload();
+                        location.reload();
+                        $('#FormModal').modal('hide');
+                    } else {
+                        alert("No se pudo guardar los cambios.");
+                    }
+                },
+                error: function (error) {
+                    console.log(error)
+                },
+                beforeSend: function () {
+                 
+                }
+            });
+
+        }
+
+        // Llenar los DropDown
+         $.ajax({
+
+            url: "@Url.Action("ObtenerClientes", "Clientes")",
+            type: "GET",
+            datatype: "json",
+            success: function(data) {
+            var tipo = $("#cbxCliente");
+            var datos = data.data;
+            $(datos).each(function(i, v){
+            tipo.append('<option value="' + v.idcliente + '">' + v.nombre + '</option>');
+        });
+        },
+            error: function() {
+                console.log('err')
+            }
+        });
+
+
+</script>
