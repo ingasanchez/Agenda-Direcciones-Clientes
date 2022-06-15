@@ -18,7 +18,6 @@ namespace Registro_Direcciones_Clientes.Controllers
             _context = context;
         }
 
-        // GET: Clientes
         public async Task<IActionResult> Index()
         {
             
@@ -87,10 +86,12 @@ namespace Registro_Direcciones_Clientes.Controllers
                     string sector = _context.Sectors.Where(s => s.Idsector == dir.Idsector).FirstOrDefault().Descripcion;
                     string calle = dir.Calle;
                     string direccion = dir.Direccion;
+                    
 
                     res += "<tr><td>" + sector + "</td>" +
-                            "<td>" + sector + "</td>" +
-                            "<td>" + direccion + "</td></tr>";
+                            "<td>" + calle + "</td>" +
+                            "<td>" + direccion + "</td>" +
+                            "<td><button class='btn btn-outline-danger btn-sm ml-2' type='button' onclick='EliminarDir(" + dir.Iddircliente + ")'>Borrar</button></td></tr>";
 
                 }
 
@@ -121,9 +122,6 @@ namespace Registro_Direcciones_Clientes.Controllers
             return Json(new { data = sectores });
 
         }
-
-
-
 
     }
 }

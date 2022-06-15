@@ -887,3 +887,4 @@ C:\Users\ADISO\Source\Repos\Test_OrionTek\Registro Direcciones Clientes\obj\Debu
 C:\Users\ADISO\Source\Repos\Test_OrionTek\Registro Direcciones Clientes\obj\Debug\net5.0\Registro Direcciones Clientes.genruntimeconfig.cache
 C:\Users\ADISO\Source\Repos\Test_OrionTek\Registro Direcciones Clientes\obj\Debug\net5.0\ref\Registro Direcciones Clientes.dll
 C:\Users\ADISO\Source\Repos\Test_OrionTek\Registro Direcciones Clientes\obj\Debug\net5.0\Razor\Views\Clientes\ModalDireccionesCliente.cshtml.g.cs
+E:\Proyectos asp net\Registro Direcciones Clientes\obj\Debug\net5.0\Razor\Views\Clientes\ModalDireccionesCliente.cshtml.g.cs

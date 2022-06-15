@@ -4,11 +4,13 @@
     ViewData["Title"] = "Listado Clientes";
 }
 
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
 <h2>Listado de Clientes</h2>
 <p>
     <button class='btn btn-success btn-sm' type='button' onclick='abrirModal()'>Nuevo Cliente</button>
 </p>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
 <!-- Modal Registro Clientes-->
 <div class="modal fade" id="FormModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -45,9 +47,9 @@
     </div>
 </div>
 
-<table class="table table-bordered">
+<table class="table table-hover">
     <thead class="thead-dark">
-        <tr>
+        <tr >
             <th>
                 ID
             </th>
@@ -57,10 +59,10 @@
             <th>
                 @Html.DisplayNameFor(model => model.Apellido)
             </th>
-            <th class="col-3"></th>
+            <th class="col-2">Direcciones</th>
         </tr>
     </thead>
-    <tbody class="table-striped">
+    <tbody class="table-striped col-sm-6">
 @foreach (var item in Model) {
         <tr>
             <td>
@@ -73,8 +75,8 @@
                 @Html.DisplayFor(modelItem => item.Apellido)
             </td>
             <td class="col-3">
-                <button class='btn btn-outline-primary  btn-sm' data-target="#FormModalDirecciones" data-toggle="modal" data-backdrop="static" data-keyboard="false" onclick="detalleDireccion(@item.Idcliente)">Ver Dir.</button>|
-                <button class='btn btn-outline-success btn-sm' type='button' onclick="abrirModalAgrDir(@item.Idcliente)">Agregar Dir.</button>
+                <button class='btn btn-outline-primary  btn-sm' data-target="#FormModalDirecciones" data-toggle="modal" data-backdrop="static" data-keyboard="false" onclick="detalleDireccion(@item.Idcliente)">Ver</button>&nbsp;
+                <button class='btn btn-outline-info btn-sm' type='button' onclick="abrirModalAgrDir(@item.Idcliente)">Agregar</button>
                 
             </td>
         </tr>
@@ -99,13 +101,13 @@
                     <input type="hidden" id="txtIdDir" />
                      <div class="form-group align-content-lg-center">
                          <label for="cbxCliente">Cliente:</label>
-                         <select id="cbxCliente" class="form-select form-select-lg mb-3" disabled>
+                         <select id="cbxCliente" class="form-select mb-3" disabled>
                              <option value="">Seleccionar Cliente</option>
                          </select>
                     </div>
                     <div class="form-group">
                          <label for="cbxSector">Sector:</label>
-                         <select id="cbxSector" class="form-select form-select-lg mb-3">
+                         <select id="cbxSector" class="form-select  mb-3">
                              <option value="">Seleccionar Sector</option>
                          </select>
                     </div>
@@ -134,7 +136,7 @@
 
 <script>
 
-      // Validaciones 
+      // Validaciones del cliente
         document.addEventListener("DOMContentLoaded", function() {
             document.getElementById("my-form").addEventListener('submit', validarFormulario); 
         });
@@ -268,6 +270,25 @@
             });
 
         }
+
+        // Borrar una dirección
+
+         function EliminarDir($id) {
+            if (confirm("¿Realmente desea eliminar la direccion?" ) ) {
+                jQuery.ajax({
+                    url: "@Url.Action("BorrarDireccion", "DireccionesCliente")" + "?id=" + $id,
+                    type: "GET",
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                            alert("Direccion borrada exitosamente.");
+                              $("#FormModalDirecciones").modal('hide');
+                         
+                                }
+                    });
+                }
+            }
+
 
         // Llenar los DropDown
         $.ajax({
