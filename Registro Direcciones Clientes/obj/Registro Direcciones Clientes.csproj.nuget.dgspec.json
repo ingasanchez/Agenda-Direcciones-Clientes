@@ -1,21 +1,18 @@
 {
   "format": 1,
   "restore": {
-    "E:\\Proyectos asp net\\Registro Direcciones Clientes\\Registro Direcciones Clientes.csproj": {}
+    "C:\\Users\\ADISO\\Source\\Repos\\Test_OrionTek\\Registro Direcciones Clientes\\Registro Direcciones Clientes.csproj": {}
   },
   "projects": {
-    "E:\\Proyectos asp net\\Registro Direcciones Clientes\\Registro Direcciones Clientes.csproj": {
+    "C:\\Users\\ADISO\\Source\\Repos\\Test_OrionTek\\Registro Direcciones Clientes\\Registro Direcciones Clientes.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Proyectos asp net\\Registro Direcciones Clientes\\Registro Direcciones Clientes.csproj",
+        "projectUniqueName": "C:\\Users\\ADISO\\Source\\Repos\\Test_OrionTek\\Registro Direcciones Clientes\\Registro Direcciones Clientes.csproj",
         "projectName": "Registro Direcciones Clientes",
-        "projectPath": "E:\\Proyectos asp net\\Registro Direcciones Clientes\\Registro Direcciones Clientes.csproj",
+        "projectPath": "C:\\Users\\ADISO\\Source\\Repos\\Test_OrionTek\\Registro Direcciones Clientes\\Registro Direcciones Clientes.csproj",
         "packagesPath": "C:\\Users\\ADISO\\.nuget\\packages\\",
-        "outputPath": "E:\\Proyectos asp net\\Registro Direcciones Clientes\\obj\\",
+        "outputPath": "C:\\Users\\ADISO\\Source\\Repos\\Test_OrionTek\\Registro Direcciones Clientes\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
           "C:\\Users\\ADISO\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
@@ -94,7 +91,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.300\\RuntimeIdentifierGraph.json"
         }
       }
     }

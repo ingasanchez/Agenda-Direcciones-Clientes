@@ -41,8 +41,24 @@ namespace Registro_Direcciones_Clientes.Controllers
         
         }
 
+        [HttpPost]
+        public async Task<JsonResult> GuardarDireccion([FromBody] DireccionCliente dir)
+        {
+            bool respuesta = false;
+
+            if (ModelState.IsValid)
+            {
+                _context.Add(dir);
+                await _context.SaveChangesAsync();
+                respuesta = true;
+            }
+
+            return Json(new { resultado = respuesta });
+
+        }
+
         [HttpGet]
-        public async Task<IActionResult> ObtenerClientes()
+        public  IActionResult ObtenerClientes()
         {
 
             List<Cliente> clientes = null;
@@ -53,6 +69,56 @@ namespace Registro_Direcciones_Clientes.Controllers
                
             }
             return Json(new { data = clientes });
+
+        }
+
+        [HttpGet]
+        public string detalleDireccion( decimal codCli )
+        {
+
+            List<DireccionCliente> listDir = null;
+            string res = "";
+
+            if (ModelState.IsValid)
+            {
+                listDir = _context.DireccionClientes.Where(s => s.Idcliente == codCli).ToList();
+                foreach (DireccionCliente dir in listDir)
+                {
+                    string sector = _context.Sectors.Where(s => s.Idsector == dir.Idsector).FirstOrDefault().Descripcion;
+                    string calle = dir.Calle;
+                    string direccion = dir.Direccion;
+
+                    res += "<tr><td>" + sector + "</td>" +
+                            "<td>" + sector + "</td>" +
+                            "<td>" + direccion + "</td></tr>";
+
+                }
+
+
+            }
+
+            if (listDir.Count == 0)
+            {
+                res = "<tr><td></td>" +
+                            "<td>No hay registros.</td>" +
+                            "<td></td></tr>";
+            }
+            return res;
+
+        }
+
+        [HttpGet]
+        public IActionResult ObtenerSectores()
+        {
+
+            List<Sector> sectores = null;
+
+            if (ModelState.IsValid)
+            {
+                sectores = _context.Sectors.ToList();
+
+            }
+            return Json(new { data = sectores });
 
         }
 
