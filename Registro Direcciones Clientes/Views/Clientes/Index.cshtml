@@ -105,6 +105,12 @@
                              <option value="">Seleccionar Cliente</option>
                          </select>
                     </div>
+                     <div class="form-group">
+                         <label for="cbxProvincia">Provincia:</label>
+                         <select id="cbxProvincia" class="form-select  mb-3" onChange="redefinirSectores(this.value)">
+                             <option value="">Seleccionar Provincia</option>
+                         </select>
+                    </div>
                     <div class="form-group">
                          <label for="cbxSector">Sector:</label>
                          <select id="cbxSector" class="form-select  mb-3">
@@ -171,6 +177,12 @@
         function validarFormularioDir(evento) {
           evento.preventDefault();
 
+           if(document.getElementById('cbxProvincia').value == "") {
+            alert('Debe especificar la Provincia.');
+            document.getElementById('cbxProvincia').focus();
+            return;
+          } 
+
           if(document.getElementById('cbxSector').value == "") {
             alert('Debe especificar el Sector.');
             document.getElementById('cbxSector').focus();
@@ -202,11 +214,13 @@
 
      function abrirModalAgrDir($cliente) {
          $("#cbxCliente").val($cliente);
+         $("#cbxProvincia").val("");
          $("#cbxSector").val("");
          $("#txtCalle").val("");
          $("#txtDireccion").val("");
          $('#FormModalRegDir').modal('show'); }
 
+     // Fx para guardar el cliente
      function Guardar() {
 
             var entidad = new Object();
@@ -308,16 +322,16 @@
             }
         });
 
-        $.ajax({
+         $.ajax({
 
-            url: "@Url.Action("ObtenerSectores", "Clientes")",
+            url: "@Url.Action("ObtenerProvincias", "Clientes")",
             type: "GET",
             datatype: "json",
             success: function(data) {
-            var tipo = $("#cbxSector");
+            var tipo = $("#cbxProvincia");
             var datos = data.data;
             $(datos).each(function(i, v){
-            tipo.append('<option value="' + v.idsector + '">' + v.descripcion + '</option>');
+            tipo.append('<option value="' + v.idprovincia + '">' + v.descripcion + '</option>');
         });
         },
             error: function() {
@@ -325,5 +339,30 @@
             }
         });
 
+    function redefinirSectores($id) {
+
+       var tipo = $("#cbxSector");
+        tipo.empty().append('<option value="">Seleccionar Sector</option>');
+
+        if (parseFloat($id) > 0 ){
+
+            $.ajax({
+
+                url: "@Url.Action("ObtenerSectores", "Clientes")" + "?id=" + $id,
+                type: "GET",
+                datatype: "json",
+                success: function(data) {
+                var datos = data.data;
+                $(datos).each(function(i, v){
+                tipo.append('<option value="' + v.idsector + '">' + v.descripcion + '</option>');
+            });
+            },
+                error: function() {
+                    console.log('err')
+                }
+            });
+        
+        }
+    }
 
 </script>

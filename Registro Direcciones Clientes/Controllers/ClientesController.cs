@@ -83,12 +83,16 @@ namespace Registro_Direcciones_Clientes.Controllers
                 listDir = _context.DireccionClientes.Where(s => s.Idcliente == codCli).ToList();
                 foreach (DireccionCliente dir in listDir)
                 {
-                    string sector = _context.Sectors.Where(s => s.Idsector == dir.Idsector).FirstOrDefault().Descripcion;
+                    
+                    Sector sector = _context.Sectors.Where(s => s.Idsector == dir.Idsector).FirstOrDefault();
+                    var idprov = sector.Idprovincia;
+                    string provincia = _context.Provincia.Where(p => p.Idprovincia == idprov).FirstOrDefault().Descripcion;
                     string calle = dir.Calle;
                     string direccion = dir.Direccion;
                     
 
-                    res += "<tr><td>" + sector + "</td>" +
+                    res += "<tr><td>" + provincia + "</td>" +
+                            "<td> " + sector.Descripcion + " </td> " +
                             "<td>" + calle + "</td>" +
                             "<td>" + direccion + "</td>" +
                             "<td><button class='btn btn-outline-danger btn-sm ml-2' type='button' onclick='EliminarDir(" + dir.Iddircliente + ")'>Borrar</button></td></tr>";
@@ -109,17 +113,31 @@ namespace Registro_Direcciones_Clientes.Controllers
         }
 
         [HttpGet]
-        public IActionResult ObtenerSectores()
+        public IActionResult ObtenerSectores(decimal id)
         {
 
             List<Sector> sectores = null;
 
             if (ModelState.IsValid)
             {
-                sectores = _context.Sectors.ToList();
+                sectores = _context.Sectors.Where(s => s.Idprovincia == id).ToList();
 
             }
             return Json(new { data = sectores });
+
+        }
+
+        public IActionResult ObtenerProvincias()
+        {
+
+            List<Provincia> provincia = null;
+
+            if (ModelState.IsValid)
+            {
+                provincia = _context.Provincia.ToList();
+
+            }
+            return Json(new { data = provincia });
 
         }
 
